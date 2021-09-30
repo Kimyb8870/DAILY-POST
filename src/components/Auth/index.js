@@ -27,7 +27,7 @@ Auth.Template = function AuthTemplate({ children, ...restProps }) {
   );
 };
 
-Auth.Form = function AuthForm({ type }) {
+Auth.Form = function AuthForm({ type, form, onChange, onSubmit }) {
   const textMap = {
     login: '로그인',
     register: '회원가입',
@@ -38,17 +38,19 @@ Auth.Form = function AuthForm({ type }) {
   return (
     <StyledAuthForm>
       <h3>{text}</h3>
-      <form>
+      <form onSubmit={onSubmit}>
         <StyledInput
           autoComplete="username"
           name="username"
           placeholder="아이디"
+          onChange={onChange}
         />
         <StyledInput
           autoComplete="new-password"
           name="password"
           placeholder="비밀번호"
           type="password"
+          onChange={onChange}
         />
         {type === 'register' && (
           <StyledInput
@@ -56,6 +58,7 @@ Auth.Form = function AuthForm({ type }) {
             name="passwordConfirm"
             placeholder="비밀번호 확인"
             type="password"
+            onChange={onChange}
           />
         )}
         <ButtonWithMarginTop cyan fullWidth>
