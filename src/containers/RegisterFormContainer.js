@@ -1,12 +1,17 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeField, initializeForm } from '../modules/auth';
+import { changeField, initializeForm, register } from '../modules/auth';
 import Auth from '../components/Auth';
+import { check } from '../modules/user';
+import { withRouter } from 'react-router';
 
-const RegisterFormContainer = () => {
+const RegisterFormContainer = ({ history }) => {
   const dispatch = useDispatch();
-  const { form } = useSelector(({ auth }) => ({
+  const { form, auth, authError, user } = useSelector(({ auth, user }) => ({
     form: auth.register,
+    auth: auth.auth,
+    authError: auth.authError,
+    user: user.user,
   }));
 
   const onChange = (e) => {
@@ -20,11 +25,18 @@ const RegisterFormContainer = () => {
     );
   };
 
-  const onSumbit = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    //나중에 구현
+    const { username, password, passwordConfirm } = form;
+    if (password !== passwordConfirm) {
+      // !!오류처리!!
+      alert('password와 passwordConfirm이 일치하지 않습니다');
+      return;
+    }
+    dispatch(register({ username, password }));
   };
 
+  //랜더링 시 입력폼 초기화
   useEffect(() => {
     dispatch(
       initializeForm({
@@ -33,14 +45,33 @@ const RegisterFormContainer = () => {
     );
   }, [dispatch]);
 
+  useEffect(() => {
+    if (authError) {
+      console.group('authError 오류발생');
+      console.groupEnd(authError);
+    }
+    if (auth) {
+      console.group('회원가입 성공');
+      console.groupEnd(auth);
+      dispatch(check());
+    }
+  }, [authError, auth, dispatch]);
+
+  //user 값 확인하기
+  useEffect(() => {
+    if (user) {
+      history.push('/');
+    }
+  }, [user, history]);
+
   return (
     <Auth.Form
       type="register"
       form={form}
       onChange={onChange}
-      onSumbit={onSumbit}
+      onSubmit={onSubmit}
     />
   );
 };
 
-export default RegisterFormContainer;
+export default withRouter(RegisterFormContainer);
