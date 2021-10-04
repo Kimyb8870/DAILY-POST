@@ -8,6 +8,7 @@ import {
   StyledInput,
   Footer,
   ButtonWithMarginTop,
+  ErrorMessage,
 } from './styles/Auth';
 
 const Auth = ({ children, ...restProps }) => {
@@ -27,7 +28,7 @@ Auth.Template = function AuthTemplate({ children, ...restProps }) {
   );
 };
 
-Auth.Form = function AuthForm({ type, form, onChange, onSubmit }) {
+Auth.Form = function AuthForm({ type, form, onChange, onSubmit, error }) {
   const textMap = {
     login: '로그인',
     register: '회원가입',
@@ -61,6 +62,7 @@ Auth.Form = function AuthForm({ type, form, onChange, onSubmit }) {
             onChange={onChange}
           />
         )}
+        {error && <ErrorMessage>{error}</ErrorMessage>}
         <ButtonWithMarginTop cyan fullWidth>
           {text}
         </ButtonWithMarginTop>

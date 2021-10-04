@@ -74,3 +74,10 @@ export const Footer = styled.div`
     }
   }
 `;
+
+export const ErrorMessage = styled.div`
+  color: red;
+  text-align: center;
+  font-size: large.875rem;
+  margin-top: 1rem;
+`;
