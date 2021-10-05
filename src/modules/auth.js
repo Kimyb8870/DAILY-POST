@@ -4,10 +4,11 @@ import createRequestSaga, {
   createRequestActionTypes,
 } from '../lib/api/createRequestSaga';
 import * as authAPI from '../lib/api/client';
-import { takeLatest } from '@redux-saga/core/effects';
+import { call, takeLatest } from '@redux-saga/core/effects';
 
 const CHANGE_FIELD = 'auth/CHANGE_FIELD';
 const INITIALIZE_FORM = 'auth/INITIALIZE_FORM';
+const LOGOUT = 'auth/LOGOUT';
 
 const [REGISTER, REGISTER_SUCCESS, REGISTER_FAILURE] =
   createRequestActionTypes('auth/REGISTER');
@@ -36,13 +37,25 @@ export const login = createAction(LOGIN, ({ username, password }) => ({
   password,
 }));
 
+export const logout = createAction(LOGOUT);
+
 //로그인 관련 Saga
 const registerSaga = createRequestSaga(REGISTER, authAPI.register);
 const loginSaga = createRequestSaga(LOGIN, authAPI.login);
 
+function* logoutSaga() {
+  try {
+    yield call(authAPI.logout);
+    localStorage.removeItem('user');
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 export function* authSaga() {
   yield takeLatest(REGISTER, registerSaga);
   yield takeLatest(LOGIN, loginSaga);
+  yield takeLatest(LOGOUT, logoutSaga);
 }
 
 const initialState = {
@@ -88,6 +101,10 @@ const auth = handleActions(
     [LOGIN_FAILURE]: (state, { payload: error }) => ({
       ...state,
       authError: error,
+    }),
+    [LOGOUT]: (state, action) => ({
+      ...state,
+      auth: null,
     }),
   },
   initialState,
