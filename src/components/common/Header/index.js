@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../Button';
-import { StyledHeader, Wrapper, Spacer } from './styles/Header';
+import { StyledHeader, Wrapper, Spacer, UserInfo } from './styles/Header';
 
-const Header = () => {
+const Header = ({ user }) => {
   return (
     <>
       <StyledHeader>
@@ -11,9 +11,16 @@ const Header = () => {
           <Link className="logo" to="/">
             DAILY POST
           </Link>
-          <div className="right">
-            <Button>로그인</Button>
-          </div>
+          {user ? (
+            <div className="right">
+              <UserInfo>{user.username}</UserInfo>
+              <Button>로그아웃</Button>
+            </div>
+          ) : (
+            <div className="right">
+              <Button to="/login">로그인</Button>
+            </div>
+          )}
         </Wrapper>
       </StyledHeader>
       <Spacer />

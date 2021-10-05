@@ -28,3 +28,8 @@ export const Wrapper = styled(Responsive)`
 export const Spacer = styled.div`
   height: 4rem;
 `;
+
+export const UserInfo = styled.div`
+  font-weight: 800;
+  margin-right: 1rem;
+`;
