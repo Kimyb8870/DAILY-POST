@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Button from '../Button';
 import { StyledHeader, Wrapper, Spacer, UserInfo } from './styles/Header';
 
-const Header = ({ user, onLogout }) => {
+const Header = ({ user }) => {
   return (
     <>
       <StyledHeader>
@@ -14,7 +14,7 @@ const Header = ({ user, onLogout }) => {
           {user ? (
             <div className="right">
               <UserInfo>{user.username}</UserInfo>
-              <Button onClick={onLogout}>로그아웃</Button>
+              <Button>로그아웃</Button>
             </div>
           ) : (
             <div className="right">
