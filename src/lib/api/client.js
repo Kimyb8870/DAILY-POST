@@ -11,3 +11,6 @@ export const register = ({ username, password }) =>
 export const check = () => client.get('/api/auth/check');
 
 export const logout = () => client.post('/api/auth/logout');
+
+export const writePost = ({ title, body, tags }) =>
+  client.post('/api/posts', { title, body, tags });
