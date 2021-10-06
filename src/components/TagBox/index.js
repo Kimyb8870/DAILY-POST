@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   StyledTagBox,
   StyledTagForm,
@@ -18,7 +18,7 @@ const TagList = React.memo(({ tags, onDelete }) => (
   </StyledTagList>
 ));
 
-const TagBox = () => {
+const TagBox = ({ onChangeTags, tags }) => {
   const [input, setInput] = useState('');
   const [localTags, setLocalTags] = useState([]);
 
@@ -27,17 +27,22 @@ const TagBox = () => {
       if (!tag) return;
       if (localTags.includes(tag)) return;
       setLocalTags([...localTags, tag]);
+      const nextTags = [...localTags, tag];
+      setLocalTags(nextTags);
+      onChangeTags(nextTags);
     },
-    [localTags],
+    [localTags, onChangeTags],
   );
 
   const deleteTag = useCallback(
     (tag) => {
       if (!tag) return;
       if (!localTags.includes(tag)) return;
-      setLocalTags(localTags.filter((t) => t !== tag));
+      const nextTags = localTags.filter((t) => t !== tag);
+      setLocalTags(nextTags);
+      onChangeTags(nextTags);
     },
-    [localTags],
+    [localTags, onChangeTags],
   );
 
   const onChange = useCallback((e) => {
@@ -52,6 +57,10 @@ const TagBox = () => {
     },
     [input, setInput, insertTag],
   );
+
+  useEffect(() => {
+    setLocalTags(tags);
+  }, [tags]);
 
   return (
     <StyledTagBox>

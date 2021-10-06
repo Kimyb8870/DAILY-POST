@@ -3,7 +3,7 @@ import { StyledWrite, TitleInput, QuillWrapper } from './styles/Write';
 import Quill from 'quill';
 import 'quill/dist/quill.bubble.css';
 
-const Write = () => {
+const Write = ({ title, body, onChangeField }) => {
   const quillElement = useRef(null);
   const quillInstance = useRef(null);
 
@@ -20,11 +20,27 @@ const Write = () => {
         ],
       },
     });
-  }, []);
+
+    const quill = quillInstance.current;
+
+    quill.on('text-change', (delta, oldDelta, source) => {
+      if (source === 'user') {
+        onChangeField({ key: 'body', value: quill.root.innerHTML });
+      }
+    });
+  }, [onChangeField]);
+
+  const onChangeTitle = (e) => {
+    onChangeField({ key: 'title', value: e.target.value });
+  };
 
   return (
     <StyledWrite>
-      <TitleInput placeholder="제목을 입력하세요" />
+      <TitleInput
+        placeholder="제목을 입력하세요"
+        onChange={onChangeTitle}
+        value={title}
+      />
       <QuillWrapper>
         <div ref={quillElement} />
       </QuillWrapper>
