@@ -1,11 +1,7 @@
 import React from 'react';
-import {
-  PostHead,
-  StyledPostViewer,
-  SubInfo,
-  Tags,
-  PostBody,
-} from './styles/PostViewer';
+import { PostHead, StyledPostViewer, PostBody } from './styles/PostViewer';
+import SubInfo from '../common/SubInfo';
+import Tags from '../common/Tags';
 
 const PostViewer = ({ post, loading, error }) => {
   if (error) {
@@ -24,17 +20,12 @@ const PostViewer = ({ post, loading, error }) => {
     <StyledPostViewer>
       <PostHead>
         <h1>{title}</h1>
-        <SubInfo>
-          <span>
-            <b>{user.username}</b>
-          </span>
-          <span>{new Date(publishedDate).toLocaleDateString()}</span>
-        </SubInfo>
-        <Tags>
-          {tags.map((tag) => (
-            <div className="tag">{tag}</div>
-          ))}
-        </Tags>
+        <SubInfo
+          username={user.username}
+          publishedDate={publishedDate}
+          hasMarginTop
+        />
+        <Tags tags={tags} />
       </PostHead>
 
       <PostBody
