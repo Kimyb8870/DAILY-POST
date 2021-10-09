@@ -17,6 +17,12 @@ export const StyledButton = styled.button`
     background: ${palette.gray[6]};
   }
 
+  &:disabled {
+    background: ${palette.gray[3]};
+    color: ${palette.gray[5]};
+    cursor: not-allowed;
+  }
+
   ${(props) =>
     props.fullWidth &&
     css`
