@@ -10,6 +10,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer, { rootSaga } from './modules';
 import createSagaMiddleware from 'redux-saga';
 import { check, tempSetUser } from './modules/user';
+import { HelmetProvider } from 'react-helmet-async';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
@@ -35,7 +36,9 @@ loadUser(); //sagaMiddleware가 실행된 이후에 loadUser실행
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
     </BrowserRouter>
   </Provider>,
   document.getElementById('root'),

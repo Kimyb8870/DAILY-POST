@@ -2,6 +2,7 @@ import React from 'react';
 import { PostHead, StyledPostViewer, PostBody } from './styles/PostViewer';
 import SubInfo from '../common/SubInfo';
 import Tags from '../common/Tags';
+import { Helmet } from 'react-helmet-async';
 
 const PostViewer = ({ post, loading, error }) => {
   if (error) {
@@ -18,6 +19,9 @@ const PostViewer = ({ post, loading, error }) => {
   const { title, body, user, publishedDate, tags } = post;
   return (
     <StyledPostViewer>
+      <Helmet>
+        <title>{title} - DAILY POST</title>
+      </Helmet>
       <PostHead>
         <h1>{title}</h1>
         <SubInfo

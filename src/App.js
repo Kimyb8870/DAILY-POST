@@ -5,10 +5,14 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import WritePage from './pages/WritePage';
 import PostPage from './pages/PostPage';
+import { Helmet } from 'react-helmet-async';
 
 function App() {
   return (
     <>
+      <Helmet>
+        <title>DAILY POST</title>
+      </Helmet>
       <Route path={['/@:username', '/']} component={PostListPage} exact />
       <Route path={['/login']} component={LoginPage} />
       <Route path={['/register']} component={RegisterPage} />
