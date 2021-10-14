@@ -2,8 +2,9 @@ import styled from 'styled-components/macro';
 import Button from '../../common/Button';
 
 export const StyledWriteActionButtons = styled.div`
-  margin-top: 1rem;
-  margin-bottom: 3rem;
+  margin-top: 2rem;
+  padding-bottom: 3rem;
+
   button + button {
     margin-left: 0.5rem;
   }

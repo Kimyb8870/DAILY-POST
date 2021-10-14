@@ -5,7 +5,8 @@ export const StyledPagination = styled.div`
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 3rem;
+  padding-top: 1rem;
+  padding-bottom: 3rem;
 `;
 
 export const StyledPageNumber = styled.div``;
